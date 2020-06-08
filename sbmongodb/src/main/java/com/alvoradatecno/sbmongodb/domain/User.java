@@ -6,9 +6,12 @@ package com.alvoradatecno.sbmongodb.domain;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 //incluir a anotação @Document e @Id para indicar que se trata de uma coleção do MongoDB
@@ -21,6 +24,11 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
+
+    @DBRef(lazy = true) // @DBRef Falar que um atributo está referenciando um outro atributo do MongoDB
+                        // lazy é uma forma de não trazer os posts quando eu acessar os usuários. Só quando eu quiser ele trará os posts
+    private List<Post> posts = new ArrayList<>(); // List é apenas uma interface. No java interfaces NÃO PODEM SER INSTANCIADAS.
+    // Para "instanciar" precisamos colocar uma implementação da interface, como por ex. ArrayList<>()
 
     public User(){}
 
@@ -52,6 +60,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
