@@ -3,6 +3,7 @@ package com.alvoradatecno.sbmongodb.config;
 
 import com.alvoradatecno.sbmongodb.domain.Post;
 import com.alvoradatecno.sbmongodb.domain.User;
+import com.alvoradatecno.sbmongodb.dto.AuthorDTO;
 import com.alvoradatecno.sbmongodb.repository.PostRepository;
 import com.alvoradatecno.sbmongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,12 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018 10:00:00"), "Partiu viagem", "Vou viajar pra SP", maria);
-        Post post2 = new Post(null, sdf.parse("21/03/2019 05:00:10"), "Bom dia!", "Acordei feliz", maria);
+        userRepository.saveAll(Arrays.asList(maria, alex, bob)); // salvar p/ que o usuário tenha um Id no BD
 
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+        Post post1 = new Post(null, sdf.parse("21/03/2018 10:00:00"), "Partiu viagem", "Vou viajar pra SP", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("21/03/2019 05:00:10"), "Bom dia!", "Acordei feliz", new AuthorDTO(maria));
+
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
