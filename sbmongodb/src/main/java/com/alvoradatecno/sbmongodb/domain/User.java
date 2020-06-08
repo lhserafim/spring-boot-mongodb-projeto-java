@@ -1,12 +1,23 @@
+// MODELO DE CAMADAS - ENTITY/DOMAIN
+// Esta classe integra o REPOSITORY com o BD
+// Esta classe representa as tabelas do BD
+
 package com.alvoradatecno.sbmongodb.domain;
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+//incluir a anotação @Document e @Id para indicar que se trata de uma coleção do MongoDB
+@Document(collection = "user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     private String id;
     private String name;
     private String email;
