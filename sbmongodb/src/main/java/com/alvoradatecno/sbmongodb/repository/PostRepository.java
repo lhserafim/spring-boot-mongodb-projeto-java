@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -33,4 +34,8 @@ public interface PostRepository extends MongoRepository<Post, String> { // Strin
     @Query("{ 'title': { $regex: ?0, $options: 'i' } }") // o ?0 é referente ao primeiro paramentro. aqui no caso o String text
                                                          // o i é um parametro p/ ignorar maiusculas e minusculas
     List<Post> searchTitle(String text); // Aqui pode ser qualquer nome
+
+    // sintaxe de query do mongoDB
+    @Query("{ $and: [ { date: {$gte: ?1} }, { date: { $lte: ?2} } , { $or: [ { 'title': { $regex: ?0, $options: 'i' } }, { 'body': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+    List<Post> fullSearch(String text, Date minDate, Date maxDate);
 }
