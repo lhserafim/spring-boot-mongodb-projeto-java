@@ -4,6 +4,7 @@ package com.alvoradatecno.sbmongodb.config;
 import com.alvoradatecno.sbmongodb.domain.Post;
 import com.alvoradatecno.sbmongodb.domain.User;
 import com.alvoradatecno.sbmongodb.dto.AuthorDTO;
+import com.alvoradatecno.sbmongodb.dto.CommentDTO;
 import com.alvoradatecno.sbmongodb.repository.PostRepository;
 import com.alvoradatecno.sbmongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class Instantiation implements CommandLineRunner {
 
         Post post1 = new Post(null, sdf.parse("21/03/2018 10:00:00"), "Partiu viagem", "Vou viajar pra SP", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("21/03/2019 05:00:10"), "Bom dia!", "Acordei feliz", new AuthorDTO(maria));
+
+        CommentDTO c1 = new CommentDTO("Boa viagem", sdf.parse("21/03/2018 10:00:00"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("21/03/2018 10:00:00"), new AuthorDTO(alex));
+        CommentDTO c3 = new CommentDTO("Tenha um bom dia", sdf.parse("21/03/2018 10:00:00"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post2.getComments().addAll(Arrays.asList(c3));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
