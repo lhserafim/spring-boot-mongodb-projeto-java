@@ -5,6 +5,7 @@
 package com.alvoradatecno.sbmongodb.service;
 
 import com.alvoradatecno.sbmongodb.domain.User;
+import com.alvoradatecno.sbmongodb.dto.UserDTO;
 import com.alvoradatecno.sbmongodb.repository.UserRepository;
 import com.alvoradatecno.sbmongodb.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,16 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User obj) {
+        return repo.insert(obj);
+    }
+
+    // Este obj criado aqui, está violando a regra da responsabilidade única INTENSIONALMENTE
+    // pois já está prevendo futuras mudanças o que facilitaria na manutenção, pois o Service já fala com o BD
+    // Poderia ser criado no UserDTO
+    public User fromDto(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getName());
     }
 }
