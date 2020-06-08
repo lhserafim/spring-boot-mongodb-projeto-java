@@ -51,10 +51,21 @@ public class UserService {
         repo.deleteById(id);
     }
 
+    public User update(User obj) {
+        User newObj = findById(obj.getId()); // Buscar o usuário p/ poder atualizar
+        updateData(newObj, obj); // faço a atualização do objeto em memória
+        return repo.save(newObj);
+    }
+
+    private void updateData(User newObj, User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
     // Este obj criado aqui, está violando a regra da responsabilidade única INTENSIONALMENTE
     // pois já está prevendo futuras mudanças o que facilitaria na manutenção, pois o Service já fala com o BD
     // Poderia ser criado no UserDTO
     public User fromDto(UserDTO objDto) {
-        return new User(objDto.getId(), objDto.getName(), objDto.getName());
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }

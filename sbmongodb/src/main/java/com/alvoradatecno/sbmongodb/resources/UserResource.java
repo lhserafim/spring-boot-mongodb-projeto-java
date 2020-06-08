@@ -69,4 +69,13 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT) // tmb poderia usar o @PostMapping()
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+        // Converter o DTO p/ User
+        User obj = service.fromDto(objDto);
+        obj.setId(id); // garantir que meu obj vai ter o Id da requisição
+        obj = service.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
 }
