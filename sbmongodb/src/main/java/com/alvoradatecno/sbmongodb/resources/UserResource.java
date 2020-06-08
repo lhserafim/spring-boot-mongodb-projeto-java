@@ -9,6 +9,7 @@ import com.alvoradatecno.sbmongodb.dto.UserDTO;
 import com.alvoradatecno.sbmongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +44,11 @@ public class UserResource {
         // passo o X como argumento
         // transformar em lista novamente .collect(Collectors.toList()
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET) //@GetMapping(value = "/{id}") // Indicar que a requisição aceita um parâmetro
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) { // @PathVariable Indica que o id virá de parametro de url
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(obj)); // converter o obj p/ UserDto
     }
 }
