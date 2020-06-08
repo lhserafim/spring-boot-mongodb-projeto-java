@@ -63,4 +63,10 @@ public class UserResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE) //@DeleteMapping(value = "/{id}") // Indicar que a requisição aceita um parâmetro
+    public ResponseEntity<Void> delete(@PathVariable String id) { // @PathVariable Indica que o id virá de parametro de url
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

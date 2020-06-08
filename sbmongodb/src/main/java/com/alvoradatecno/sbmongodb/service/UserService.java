@@ -46,6 +46,11 @@ public class UserService {
         return repo.insert(obj);
     }
 
+    public void delete(String id) {
+        findById(id); // Buscar se o id existe e se não existir já lança a exceção
+        repo.deleteById(id);
+    }
+
     // Este obj criado aqui, está violando a regra da responsabilidade única INTENSIONALMENTE
     // pois já está prevendo futuras mudanças o que facilitaria na manutenção, pois o Service já fala com o BD
     // Poderia ser criado no UserDTO
