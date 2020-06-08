@@ -4,6 +4,7 @@
 
 package com.alvoradatecno.sbmongodb.resources;
 
+import com.alvoradatecno.sbmongodb.domain.Post;
 import com.alvoradatecno.sbmongodb.domain.User;
 import com.alvoradatecno.sbmongodb.dto.UserDTO;
 import com.alvoradatecno.sbmongodb.service.UserService;
@@ -78,4 +79,9 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts()); // isto vai funcionar por causa do @DBRef
+    }
 }
